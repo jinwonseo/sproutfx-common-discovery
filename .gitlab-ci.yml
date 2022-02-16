@@ -10,6 +10,7 @@ cache:
 stages:
   - build
   - test
+  - package
 
 maven-build:
   image: maven:3.6.3-openjdk-11-slim
