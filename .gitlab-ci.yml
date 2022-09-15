@@ -25,11 +25,18 @@ maven-test:
     - "mvn $MAVEN_CLI_OPTS test"
 
 docker-build:
-  image: docker:latest
+  image: docker:20.10.18
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
   stage: package
   services:
-    - docker:dind
+    - name: docker:20.10.18-dind
+      alias: docker
+      command: [ "--tls=false" ]
   before_script:
+    - docker info
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker pull $CI_REGISTRY_IMAGE:latest || true
