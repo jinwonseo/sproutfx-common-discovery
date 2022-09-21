@@ -19,6 +19,16 @@
 	</properties>
 	<repositories>
 		<repository>
+			<id>private-nexus3-maven</id>
+			<url>http://nexus.sproutfx.kr/repository/maven-public/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
 			<id>private-gitlab-maven</id>
 			<url>https://gitlab.sproutfx.kr/api/v4/groups/5/-/packages/maven</url>
 			<snapshots>
@@ -33,16 +43,6 @@
 			<url>https://gitlab.com/api/v4/groups/16033742/-/packages/maven/</url>
 			<snapshots>
 				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>private-nexus3-maven</id>
-			<url>http://nexus.sproutfx.kr/repository/maven-public/</url>
-			<snapshots>
-				<enabled>false</enabled>
 			</snapshots>
 			<releases>
 				<enabled>true</enabled>
