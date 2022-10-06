@@ -8,15 +8,21 @@ cache:
     - target/
 
 stages:
-  - build
-  - test
-  - package
+  - sast
+  - maven-build
+  - maven-test
+  - docker-build
+
+sast:
+  stage: sast
+include:
+  - template: Security/SAST.gitlab-ci.yml
 
 maven-build:
   image: maven:3.6.3-openjdk-11-slim
-  stage: build
-  script: 
-    - "mvn $MAVEN_CLI_OPTS clean package -DskipTests"
+  stage: maven-build
+  script:
+    - mvn $MAVEN_CLI_OPTS clean package -DskipTests
   artifacts:
     paths:
       - target/*.jar
@@ -24,9 +30,9 @@ maven-build:
 
 maven-test:
   image: maven:3.6.3-openjdk-11-slim
-  stage: test
-  script: 
-    - "mvn $MAVEN_CLI_OPTS test"
+  stage: maven-test
+  script:
+    - mvn $MAVEN_CLI_OPTS test
 
 docker-build:
   image: docker:20.10.18
@@ -34,17 +40,17 @@ docker-build:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-  stage: package
+  stage: docker-build
   services:
     - name: docker:20.10.18-dind
       alias: docker
-      command: [ "--tls=false" ]
+      command: ["--tls=false"]
   before_script:
     - docker info
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
+    - docker build --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker push $CI_REGISTRY_IMAGE:latest
   only:
