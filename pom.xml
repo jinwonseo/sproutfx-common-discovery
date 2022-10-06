@@ -75,7 +75,7 @@
 		<!-- Logging -->
 		<dependency>
 			<groupId>kr.sproutfx.common</groupId>
-			<artifactId>sproutfx-common-logging-spring-boot-stater</artifactId>
+			<artifactId>sproutfx-common-logging-spring-boot-starter</artifactId>
 			<version>0.0.4-SNAPSHOT</version>
 		</dependency>
 
