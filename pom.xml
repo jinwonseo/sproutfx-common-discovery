@@ -38,16 +38,6 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		<repository>
-			<id>public-gitlab-maven</id>
-			<url>https://gitlab.com/api/v4/groups/16033742/-/packages/maven/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
 	</repositories>
 	<dependencies>
 		<!-- Cloud stater -->
@@ -85,7 +75,7 @@
 		<!-- Logging -->
 		<dependency>
 			<groupId>kr.sproutfx.common</groupId>
-			<artifactId>sproutfx-common-logging-spring-boot-stater</artifactId>
+			<artifactId>sproutfx-common-logging-spring-boot-starter</artifactId>
 			<version>0.0.4-SNAPSHOT</version>
 		</dependency>
 

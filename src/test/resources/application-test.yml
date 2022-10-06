@@ -1,0 +1,64 @@
+server:
+  port: 8761
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1*
+      preferred-networks:
+        - 127.0
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: ${spring.application.name}
+    password: ${spring.application.name}
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 3
+    lease-expiration-duration-in-seconds: 10
+  server:
+    enable-self-preservation: false
+  client:
+    healthcheck:
+      enabled: true
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    refresh:
+      enabled: true
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: WARN
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
+    kr.sproutfx: INFO
+
+sproutfx:
+  logging:
+    identifier: ${spring.application.name}-${spring.profiles.active}
+    logstash:
+      appender-name: LOGSTASH
+      async-appender-name: ASYNC_LOGSTASH
+      host: 127.0.0.1
+      port: 5045
+      queue-size: 512
