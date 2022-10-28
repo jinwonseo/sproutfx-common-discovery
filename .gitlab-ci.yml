@@ -3,6 +3,7 @@ variables:
   MAVEN_CLI_OPTS: "-s .gitlab-ci-mvn-settings.xml --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
 
 cache:
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - .m2/repository
     - target/
